@@ -32,7 +32,7 @@ public class ExtentReportListener implements ITestListener {
     private int passedTests = 0;
     private int failedTests = 0;
     private int skippedTests = 0;
- //10/01/2025
+
     @Override
     public void onStart(ITestContext context) {
         suiteStartTime = System.currentTimeMillis();
@@ -67,71 +67,6 @@ public class ExtentReportListener implements ITestListener {
         // Store start time for duration calculation
         context.setAttribute("SUITE_START_TIME", suiteStartTime);
     }
-
-//    @Override
-//    public void onStart(ITestContext context) {
-//        suiteStartTime = System.currentTimeMillis();
-//
-//        // Fixed folder (no timestamp) → test-output
-//        String reportDir = "test-output";
-//
-//        // Ensure folder exists
-//        new File(reportDir).mkdirs();
-//
-//        // Configure ExtentSparkReporter with fixed filename
-//        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportDir + "/ExtentReport.html");
-//        sparkReporter.config().setDocumentTitle("Automation Test Report");
-//        sparkReporter.config().setReportName("Functional Testing");
-//
-//        extent = new ExtentReports();
-//        extent.attachReporter(sparkReporter);
-//
-//        // 🔹 Create placeholder summary FIRST (will appear on top)
-//        summaryTest = extent.createTest("🔹 Test Execution Summary 🔹");
-//
-//        // Add system info
-//        extent.setSystemInfo("Tester", "Haresh Patel");
-//        extent.setSystemInfo("Environment", "QA");
-//        extent.setSystemInfo("Browser", "Chrome");
-//        extent.setSystemInfo("OS", System.getProperty("os.name"));
-//        extent.setSystemInfo("Java Version", System.getProperty("java.version"));
-//
-//        // Store reportDir for screenshots (optional, but still works)
-//        context.setAttribute("REPORT_DIR", reportDir);
-//    }
-    
-//    @Override
-//    public void onStart(ITestContext context) {
-//        suiteStartTime = System.currentTimeMillis();
-//        
-//        // Create a timestamp for this test run
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        String reportDir = "test-output/Run_" + timeStamp;
-//        
-//        // Ensure folder exists
-//        new File(reportDir).mkdirs();
-//
-//        // Configure ExtentSparkReporter
-//        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportDir + "/ExtentReport.html");
-//        sparkReporter.config().setDocumentTitle("Automation Test Report");
-//        sparkReporter.config().setReportName("Functional Testing");
-//
-//        extent = new ExtentReports();
-//        extent.attachReporter(sparkReporter);
-//        
-//        // 🔹 Create placeholder summary FIRST (will appear on top)
-//        summaryTest = extent.createTest("🔹 Test Execution Summary 🔹");
-//        
-//        // Add system info
-//        extent.setSystemInfo("Tester", "Haresh Patel");
-//        extent.setSystemInfo("Environment", "QA");
-//        extent.setSystemInfo("Browser", "Chrome");
-//        extent.setSystemInfo("OS", System.getProperty("os.name"));
-//        extent.setSystemInfo("Java Version", System.getProperty("java.version"));
-//
-//        // Store reportDir for screenshots
-//        context.setAttribute("REPORT_DIR", reportDir);
-//    }
 
     @Override
     public void onTestStart(ITestResult result) {
@@ -178,46 +113,12 @@ public class ExtentReportListener implements ITestListener {
         }
     }
 
-//    @Override
-//    public void onTestFailure(ITestResult result) {
-//        ExtentTest test = extentTest.get();
-//        test.log(Status.FAIL, "Test failed: " + result.getThrowable());
-//        failedTests++;
-//        
-//        try {
-//            if (TestBase.driver != null) {
-//                Thread.sleep(500);
-//
-//                // Get report folder from context
-//                ITestContext context = result.getTestContext();
-//                String reportDir = (String) context.getAttribute("REPORT_DIR");
-//                new File(reportDir + "/screenshots").mkdirs();
-//
-//                // Save local screenshot
-//                File src = ((TakesScreenshot) TestBase.driver).getScreenshotAs(OutputType.FILE);
-//                String localPath = reportDir + "/screenshots/" + result.getMethod().getMethodName() + ".png";
-//                Files.copy(src.toPath(), Paths.get(localPath), StandardCopyOption.REPLACE_EXISTING);
-//
-//                // Capture Base64 screenshot for report
-//                String base64Screenshot = ((TakesScreenshot) TestBase.driver)
-//                                            .getScreenshotAs(OutputType.BASE64);
-//                test.fail("Screenshot of failure",
-//                        MediaEntityBuilder.createScreenCaptureFromBase64String(base64Screenshot).build());
-//            } else {
-//                test.warning("WebDriver instance is null - cannot capture screenshot");
-//            }
-//        } catch (Exception e) {
-//            test.warning("Exception while capturing screenshot: " + e.getMessage());
-//        }
-//    }
-
     @Override
     public void onTestSkipped(ITestResult result) {
         extentTest.get().log(Status.SKIP, "Test skipped: " + result.getThrowable());
         skippedTests++;
     }
 
- //10/01/2025
     @Override
     public void onFinish(ITestContext context) {
         suiteEndTime = System.currentTimeMillis();
